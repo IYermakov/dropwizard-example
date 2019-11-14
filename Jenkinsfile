@@ -1,7 +1,6 @@
 pipeline {
   agent {
     docker {
-      label 'main'
       image 'docker:dind'
     }
   }
@@ -26,7 +25,6 @@ pipeline {
     stage('Run maven') {
       agent {
         docker {
-          label 'compile'
           image 'maven:latest'
         }
       }
@@ -49,8 +47,7 @@ pipeline {
       }
       agent {
         docker {
-          label 'build_image'
-          image 'maven:latest'
+          image 'docker:dind'
         }
       }
       steps {
@@ -75,8 +72,7 @@ pipeline {
             stage('Run image for testing') {
       agent {
         docker {
-          label 'build_image'
-          image 'maven:latest'
+          image 'docker:dind'
         }
       }
                 steps {
@@ -99,12 +95,11 @@ pipeline {
             stage('Tests:') {
                 parallel {
                     stage('Test app response tag') {
-      agent {
-        docker {
-          label 'test_image'
-          image 'dind:latest'
-        }
-      }
+                        agent {
+                          docker {
+                            image 'dind:latest'
+                          }
+                        }
                         steps {
                                 script {
                                     HTTP_RESPONSE_CODE_0 = sh (script: 'docker run -i --net=curltest tutum/curl \
@@ -126,7 +121,6 @@ pipeline {
                     stage('Test read and write') {
       agent {
         docker {
-          label 'build_image'
           image 'dind:latest'
         }
       }
