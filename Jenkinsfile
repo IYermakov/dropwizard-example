@@ -1,4 +1,10 @@
 pipeline {
+  agent {
+    docker {
+      label 'main'
+      image 'docker:dind'
+    }
+  }
   options {
     timestamps()
   }
