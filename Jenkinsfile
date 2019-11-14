@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'docker:dind'
-    }
-  }
+  agent none
   options {
     timestamps()
   }
@@ -12,15 +8,20 @@ pipeline {
     IMAGE_NAME = 'notregistered/dropw'
     IMAGE_TAG = sh (script: 'git describe --tags --always', returnStdout: true).trim()
   }
-  stages {
-    stage('Use last tag commit if present ') {
-      when { buildingTag() }
-      steps {
-        script {
-            IMAGE_TAG = "${TAG_NAME}"
-        }
-      }
-    }
+#  stages {
+#    stage('Use last tag commit if present ') {
+#      agent {
+#        docker {
+#          image 'alpine/git:latest'
+#        }
+#      }
+#      when { buildingTag() }
+#      steps {
+#        script {
+#            IMAGE_TAG = "${TAG_NAME}"
+#        }
+#      }
+#    }
 
     stage('Run maven') {
       agent {
