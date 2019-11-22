@@ -68,7 +68,7 @@ pipeline {
             stage('Run image for testing') {
       agent {
         docker {
-          image 'docker:dind'
+          image 'docker:latest'
         }
       }
                 steps {
@@ -93,7 +93,7 @@ pipeline {
                     stage('Test app response tag') {
                         agent {
                           docker {
-                            image 'dind:latest'
+                            image 'docker:latest'
                           }
                         }
                         steps {
@@ -115,11 +115,11 @@ pipeline {
                         }
                     }
                     stage('Test read and write') {
-      agent {
-        docker {
-          image 'dind:latest'
-        }
-      }
+                        agent {
+                          docker {
+                            image 'docker:latest'
+                          }
+                        }
                         steps {
                                 script {
                                     HTTP_RESPONSE_CODE_1 = sh (script: 'docker run -i --net=curltest tutum/curl \
