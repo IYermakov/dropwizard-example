@@ -18,34 +18,34 @@ database:
   url: jdbc:h2:./target/example
 
 # use the simple server factory if you only want to run on a single port
-#server:
-#  type: simple
-#  connector:
-#    type: http
-#    port: 8080
-
 server:
+  type: simple
+  connector:
+    type: http
+    port: 8080
+
+#server:
 #  softNofileLimit: 1000
 #  hardNofileLimit: 1000
-  applicationConnectors:
-    - type: http
-      port: 8080
-    - type: https
-      port: 8443
-      keyStorePath: example.keystore
-      keyStorePassword: example
+#  applicationConnectors:
+#    - type: http
+#      port: 8080
+#    - type: https
+#      port: 8443
+#      keyStorePath: example.keystore
+#      keyStorePassword: example
     #this requires the alpn-boot library on the JVM's boot classpath
     #- type: h2
     #  port: 8445
     #  keyStorePath: example.keystore
     #  keyStorePassword: example
-  adminConnectors:
-    - type: http
-      port: 8081
-    - type: https
-      port: 8444
-      keyStorePath: example.keystore
-      keyStorePassword: example
+#  adminConnectors:
+#    - type: http
+#      port: 8081
+#    - type: https
+#      port: 8444
+#      keyStorePath: example.keystore
+#      keyStorePassword: example
 
 # Logging settings.
 logging:
@@ -84,10 +84,10 @@ viewRendererConfiguration:
         strict_syntax: yes
         whitespace_stripping: yes
 
-metrics:
-  reporters:
-    - type: graphite
-      host: localhost
-      port: 2003
-      prefix: example
-      frequency: 1m
+#metrics:
+#  reporters:
+#    - type: graphite
+#      host: localhost
+#      port: 2003
+#      prefix: example
+#      frequency: 1m
