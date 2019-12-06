@@ -1,15 +1,4 @@
 pipeline {
-  options {
-    timestamps()
-  }
-  environment {
-    DOCKERHUB_SERVER = 'https://index.docker.io/v1/'
-    HELM_RELEASE = 'dropw'
-    IMAGE_NAME = 'notregistered/dropw'
-    IMAGE_TAG = sh (script: 'git describe --tags --always', returnStdout: true).trim()
-    CHART_DIR = 'dropw-app'
-    CLUSTER_KUBECONFIG = 'gcp_kubeconfig'
-  }
   agent {
   kubernetes {
     yaml """
