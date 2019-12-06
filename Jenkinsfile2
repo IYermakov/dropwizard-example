@@ -12,13 +12,12 @@ pipeline {
   }
   agent {
   kubernetes {
-    label 'buildpod'
     yaml """
 apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    some-label: buildpod
+    buildpod: dropw-buildpod
 spec:
   serviceAccountName: jenkins
   containers:
