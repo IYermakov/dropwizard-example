@@ -16,6 +16,9 @@ pipeline {
     yaml """
 apiVersion: v1
 kind: Pod
+metadata:
+  labels:
+    some-label: some-label-value
 spec:
   serviceAccountName: jenkins
   containers:
@@ -58,11 +61,11 @@ spec:
     stage('Use last tag commit if present ') {
       steps {
         script {
-withCredentials([file(credentialsId: 'devopsa3', variable: 'GC_KEY')]) {
-    sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
-    sh("gcloud container clusters get-credentials devopsa3cluster --zone us-central1-a --project devopsa3")
-    sh("kubectl cluster-info")
-}
+          withCredentials([file(credentialsId: 'devopsa3', variable: 'GC_KEY')]) {
+            sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+            sh("gcloud container clusters get-credentials devopsa3cluster --zone us-central1-a --project devopsa3")
+            sh("kubectl cluster-info")
+          }
         }
       }
     }
