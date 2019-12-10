@@ -10,6 +10,11 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
+    - name: gcloud-kubectl-docker
+      image: claranet/gcloud-kubectl-docker:latest
+      command:
+      - cat
+      tty: true
     - name: docker
       image: docker:latest
       command:
@@ -48,11 +53,13 @@ spec:
   stages {
     stage('Use last tag commit if present ') {
       steps {
-        script {
-          withCredentials([sshUserPrivateKey(credentialsId: 'devopsa3', keyFileVariable: 'GC_KEY')]) {
-            sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
-            sh("gcloud container clusters get-credentials devopsa3cluster --zone us-central1-a --project devopsa3")
-            sh("kubectl cluster-info")
+        container('gcloud-kubectl-docker') {
+          script {
+            withCredentials([sshUserPrivateKey(credentialsId: 'devopsa3', keyFileVariable: 'GC_KEY')]) {
+              sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+              sh("gcloud container clusters get-credentials devopsa3cluster --zone us-central1-a --project devopsa3")
+              sh("kubectl cluster-info")
+            }
           }
         }
       }
