@@ -25,6 +25,12 @@ pipeline {
         }
       }
       steps {
+sh 'rm subdir -rf; mkdir subdir'
+dir ('subdir') {
+git branch: 'master',
+credentialsId: 'snakes',
+url: 'git@github.com:IYermakov/Snakes.git'
+}
           sh 'mvn -Dmaven.test.failure.ignore clean package'
       }
       post {
