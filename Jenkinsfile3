@@ -5,6 +5,7 @@ pipeline {
       yaml """
 apiVersion: v1
 kind: Pod
+serviceAccount: jenkins
 metadata:
   labels:
     some-label: some-label-value
