@@ -255,7 +255,7 @@ spec:
         when { allOf { branch 'master'; not { changeRequest() } } }
         steps {
             container('gcloud-kubectl-docker') {
-                sh "kubectl run dropw-app --image=${IMAGE_NAME}:{IMAGE_TAG}"
+                sh "kubectl run dropw-app --image=${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
         post {
