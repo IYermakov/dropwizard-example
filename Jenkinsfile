@@ -154,8 +154,6 @@ spec:
                                 script {
                                     HTTP_RESPONSE_CODE_0 = sh (script: 'docker run -i --net=curltest tutum/curl \
                                         curl -s http://dropw-test:8080/hello-world | awk \'{print $(NF-1)}\'', returnStdout: true).trim()
-                                    println "${HTTP_RESPONSE_CODE_1}"
-                                    println "${IMAGE_TAG}"
                                     if (!"${HTTP_RESPONSE_CODE_0}" == "${IMAGE_TAG}") {
                                         throw new Exception("Testing response app tag failure!")
                                     }
@@ -265,7 +263,7 @@ spec:
                 println "New release was successfully deployed"
             }
             failure{
-                println "Error deploying the chart"
+                println "Error deploying release"
             }
         }
     }
