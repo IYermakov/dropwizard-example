@@ -256,13 +256,8 @@ spec:
     stage('Deploy to k8s') {
         when { allOf { branch 'master'; not { changeRequest() } } }
         steps {
-            container('helm') {
-                sh "helm init --client-only"
-                withCredentials([file(credentialsId: "${CLUSTER_KUBECONFIG}", variable: 'kubeconfig')]) {
-                    sh """
-                        cat $kubeconfig > kubeconfig
-                        helm upgrade ${HELM_RELEASE} ${CHART_DIR} --install --kubeconfig kubeconfig --set image.repository=${IMAGE_NAME} --set image.tag=${IMAGE_TAG} --debug --wait
-                    """
+            container('gcloud-kubectl-docker') {
+                sh "kubectl run dropw-app --image=${IMAGE_NAME}:{IMAGE_TAG}"
                 }
             }
         }
