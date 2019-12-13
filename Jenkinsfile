@@ -55,7 +55,7 @@ spec:
       steps {
         container('gcloud-kubectl-docker') {
           script {
-            withCredentials([file(credentialsId: 'jenkinssa-k8s', keyFileVariable: 'GC_KEY')]) {
+            withCredentials([file(credentialsId: 'jenkinssa-k8s', variable: 'GC_KEY')]) {
               sh("gcloud auth activate-service-account jenkins@devopsa3.iam.gserviceaccount.com --key-file=${GC_KEY}")
               sh("gcloud container clusters get-credentials devopsa3cluster --zone us-central1-a --project devopsa3")
               sh("kubectl cluster-info")
