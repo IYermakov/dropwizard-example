@@ -258,7 +258,6 @@ spec:
         steps {
             container('gcloud-kubectl-docker') {
                 sh "kubectl run dropw-app --image=${IMAGE_NAME}:{IMAGE_TAG}"
-                }
             }
         }
         post {
