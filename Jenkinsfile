@@ -33,7 +33,7 @@ spec:
       - cat
       tty: true
     - name: helm
-      image: alpine/helm:2.13.1
+      image: alpine/helm:latest
       command:
       - cat
       tty: true
@@ -51,7 +51,7 @@ spec:
     }
   }
   stages {
-    stage('Use last tag commit if present ') {
+    stage('GCP authorization') {
       steps {
         container('gcloud-kubectl-docker') {
           script {
@@ -63,6 +63,15 @@ spec:
           }
         }
       }
+      post {
+        success{
+            println "GCP authorization complete"
+        }
+        failure{
+            println "GCP authorization failed. Check your service account."
+        }
+      }
+
     }
 
     stage('Run maven') {
